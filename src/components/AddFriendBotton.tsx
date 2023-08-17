@@ -1,8 +1,18 @@
 "use client";
 
+import { addFriendValidator } from "@/lib/validations/add-friend";
 import Button from "./ui/Button";
+import axios from "axios";
 
 export default function AddFriendBotton() {
+  const addFriend = async (email: string) => {
+    try {
+      const validatedEmail = addFriendValidator.parse({ email });
+
+      await axios.post("/api/friend/add", {});
+    } catch (error) {}
+  };
+
   return (
     <form className="max-w-sm">
       <label
