@@ -3,13 +3,18 @@
 import { addFriendValidator } from "@/lib/validations/add-friend";
 import Button from "./ui/Button";
 import axios from "axios";
+import { useState } from "react";
 
 export default function AddFriendBotton() {
+  const [showSuccessState, setShowSuccessState] = useState(false);
+
   const addFriend = async (email: string) => {
     try {
       const validatedEmail = addFriendValidator.parse({ email });
 
-      await axios.post("/api/friend/add", {});
+      await axios.post("/api/friend/add", {
+        email: validatedEmail,
+      });
     } catch (error) {}
   };
 
