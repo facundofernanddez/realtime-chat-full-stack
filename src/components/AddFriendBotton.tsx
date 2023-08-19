@@ -25,7 +25,7 @@ export default function AddFriendBotton() {
     try {
       const validatedEmail = addFriendValidator.parse({ email });
 
-      await axios.post("/api/friend/add", {
+      await axios.post("/api/friends/add", {
         email: validatedEmail,
       });
 
