@@ -1,6 +1,9 @@
+import FriendRequestsSideBarOption from "@/components/FriendRequestsSideBarOption";
+import SignOutButton from "@/components/SignOutButton";
 import { Icon, Icons } from "@/components/icons";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ReactNode } from "react";
@@ -39,7 +42,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
           Your chats
         </div>
 
-        <nav className="felx flex-1 flex-col">
+        <nav className="flex flex-1 flex-col">
           <ul
             role="list"
             className="flex flex-1 flex-col gap-y-7"
@@ -72,6 +75,37 @@ export default async function Layout({ children }: { children: ReactNode }) {
                   );
                 })}
               </ul>
+            </li>
+
+            <li>
+              <FriendRequestsSideBarOption />
+            </li>
+
+            <li className="-mx-6 mt-auto flex items-center">
+              <div className="flex flex-1 items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900">
+                <div className="relative h-8 w-8 bg-gray-50">
+                  <Image
+                    fill
+                    referrerPolicy="no-referrer"
+                    className="rounded-full"
+                    src={session.user.image || ""}
+                    alt="Your profile image"
+                  />
+                </div>
+
+                <span className="sr-only">Your profile</span>
+                <div className="flex flex-col ">
+                  <span aria-hidden="true">{session.user.name}</span>
+                  <span
+                    className="text-xs text-zinc-400"
+                    aria-hidden="true"
+                  >
+                    {session.user.email}
+                  </span>
+                </div>
+              </div>
+
+              <SignOutButton className="h-full aspect-square" />
             </li>
           </ul>
         </nav>
