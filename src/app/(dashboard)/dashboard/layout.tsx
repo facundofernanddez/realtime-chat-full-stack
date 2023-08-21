@@ -1,6 +1,7 @@
 import FriendRequestsSideBarOption from "@/components/FriendRequestsSideBarOption";
 import SignOutButton from "@/components/SignOutButton";
 import { Icon, Icons } from "@/components/icons";
+import { fetchRedis } from "@/helpers/redis";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
@@ -28,6 +29,13 @@ export default async function Layout({ children }: { children: ReactNode }) {
   const session = await getServerSession(authOptions);
 
   if (!session) notFound();
+
+  const unseenRequestCount = (
+    (await fetchRedis(
+      "smembers",
+      `user:${session.user.id}:incoming_friend_request`
+    )) as User[]
+  ).length;
   return (
     <div className="flex h-screen w-full">
       <div className="flex h-full w-full max-w-xs grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
@@ -65,7 +73,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
                         href={option.href}
                         className="text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group flex gap-3 rounded-md p-2 text-sm leading-6 font-semibold"
                       >
-                        <span className="text-gray-400 border-gray-200 group-hover:border-indigo-600 group-hover:text-indigo-600 flex h-6 w-6 shrink-0 items-center justify-center roudend-lg border-text-[0.625rem] font-medium bg-white">
+                        <span className="text-gray-400 border-gray-200 group-hover:border-indigo-600 group-hover:text-indigo-600 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white">
                           <Icon className="h-4 w-4" />
                         </span>
 
@@ -74,11 +82,13 @@ export default async function Layout({ children }: { children: ReactNode }) {
                     </li>
                   );
                 })}
+                <li>
+                  <FriendRequestsSideBarOption
+                    sessionId={session.user.id}
+                    initialUnseenRequestCount={unseenRequestCount}
+                  />
+                </li>
               </ul>
-            </li>
-
-            <li>
-              <FriendRequestsSideBarOption />
             </li>
 
             <li className="-mx-6 mt-auto flex items-center">
