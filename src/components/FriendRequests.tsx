@@ -1,6 +1,7 @@
 "use client";
 
-import { Check, UserPlus } from "lucide-react";
+import { Check, UserPlus, X } from "lucide-react";
+import { Cagliostro } from "next/font/google";
 import { useState } from "react";
 
 interface FriendRequestsProps {
@@ -15,12 +16,13 @@ export default function FriendRequests({
   const [friendRequests, setFriendRequests] = useState<IncomingFriendRequest[]>(
     incomingFriendRequests
   );
+
   return (
     <>
       {friendRequests.length === 0 ? (
         <p className="text-sm text-zinc-500">Nothing to show here...</p>
       ) : (
-        friendRequests.map((request) => {
+        friendRequests.map((request) => (
           <div
             key={request.senderId}
             className="flex gap-4 items-center"
@@ -33,9 +35,15 @@ export default function FriendRequests({
             >
               <Check className="font-semibold text-white w-3/4 h-3/4" />
             </button>
-            <button></button>
-          </div>;
-        })
+
+            <button
+              aria-label="deny friend"
+              className="w-8 h-8 bg-red-600 hover:bg-red-700 grid place-items-center rounded-full transition hover:shadow-md"
+            >
+              <X className="font-semibold text-white w-3/4 h-3/4" />
+            </button>
+          </div>
+        ))
       )}
     </>
   );
