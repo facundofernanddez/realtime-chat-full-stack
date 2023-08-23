@@ -16,10 +16,13 @@ export default async function RequestsPage() {
 
   const incomingFriendRequests = await Promise.all(
     incomingSenderIds.map(async (senderId) => {
-      const sender = (await fetchRedis("get", `user:${senderId}`)) as User;
-      return { senderId, senderEmail: sender.email };
+      const sender = (await fetchRedis("get", `user:${senderId}`)) as string;
+
+      const senderParsed = JSON.parse(sender) as User;
+      return { senderId, senderEmail: senderParsed.email };
     })
   );
+
   return (
     <main className="pt-8">
       <h1 className="font-bold text-5xl mb-8">Add a friend</h1>
