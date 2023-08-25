@@ -104,7 +104,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
                 </div>
 
                 <span className="sr-only">Your profile</span>
-                <div className="flex flex-col ">
+                <div className="flex flex-col">
                   <span aria-hidden="true">{session.user.name}</span>
                   <span
                     className="text-xs text-zinc-400"
@@ -120,7 +120,10 @@ export default async function Layout({ children }: { children: ReactNode }) {
           </ul>
         </nav>
       </div>
-      {children}
+
+      <aside className="max-h-screen container py-16 md:py-12 w-full">
+        {children}
+      </aside>
     </div>
   );
 }
