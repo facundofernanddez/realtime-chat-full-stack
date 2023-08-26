@@ -1,6 +1,8 @@
 import FriendRequestsSideBarOption from "@/components/FriendRequestsSideBarOption";
+import SidebarChatList from "@/components/SidebarChatList";
 import SignOutButton from "@/components/SignOutButton";
 import { Icon, Icons } from "@/components/icons";
+import { getFriendsByUserId } from "@/helpers/getFriend";
 import { fetchRedis } from "@/helpers/redis";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
@@ -28,12 +30,16 @@ const sidebarOptions: SidebarbarOption[] = [
 export default async function Layout({ children }: { children: ReactNode }) {
   const session = await getServerSession(authOptions);
 
-  if (!session) notFound();
+  if (!session) {
+    return notFound();
+  }
+
+  const friends = await getFriendsByUserId(session?.user?.id);
 
   const unseenRequestCount = (
     (await fetchRedis(
       "smembers",
-      `user:${session.user.id}:incoming_friend_request`
+      `user:${session?.user?.id}:incoming_friend_request`
     )) as User[]
   ).length;
   return (
@@ -46,16 +52,23 @@ export default async function Layout({ children }: { children: ReactNode }) {
           <Icons.Logo className="h-8 w-auto text-indigo-600" />
         </Link>
 
-        <div className="text-sx font-semibold leading-6 text-gray-400">
-          Your chats
-        </div>
+        {friends.length > 0 ? (
+          <div className="text-sx font-semibold leading-6 text-gray-400">
+            Your chats
+          </div>
+        ) : null}
 
         <nav className="flex flex-1 flex-col">
           <ul
             role="list"
             className="flex flex-1 flex-col gap-y-7"
           >
-            <li>chats that this user has</li>
+            <li>
+              <SidebarChatList
+                sessionId={session.user.id}
+                friends={friends}
+              />
+            </li>
             <li>
               <div className="text-sm font-semibold leading-6 text-gray-400">
                 Overview
@@ -105,7 +118,12 @@ export default async function Layout({ children }: { children: ReactNode }) {
 
                 <span className="sr-only">Your profile</span>
                 <div className="flex flex-col">
-                  <span aria-hidden="true">{session.user.name}</span>
+                  <span
+                    aria-hidden="true"
+                    className="truncate"
+                  >
+                    {session.user.name}
+                  </span>
                   <span
                     className="text-xs text-zinc-400"
                     aria-hidden="true"
