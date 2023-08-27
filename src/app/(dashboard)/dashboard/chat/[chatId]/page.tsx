@@ -78,7 +78,10 @@ export default async function OneChatPage({ params }: PageProps) {
         </div>
       </div>
 
-      <Messages />
+      <Messages
+        initialMessages={initialMessages}
+        sessionId={session.user.id}
+      />
     </div>
   );
 }
