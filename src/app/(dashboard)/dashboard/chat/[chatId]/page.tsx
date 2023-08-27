@@ -1,3 +1,4 @@
+import ChatInput from "@/components/ChatInput";
 import Messages from "@/components/Messages";
 import { fetchRedis } from "@/helpers/redis";
 import { authOptions } from "@/lib/auth";
@@ -79,8 +80,14 @@ export default async function OneChatPage({ params }: PageProps) {
       </div>
 
       <Messages
+        chatPartner={chatPartner}
+        sessionImg={session.user.image}
         initialMessages={initialMessages}
         sessionId={session.user.id}
+      />
+      <ChatInput
+        chatPartner={chatPartner}
+        chatId={chatId}
       />
     </div>
   );
