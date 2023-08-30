@@ -80,6 +80,7 @@ export default async function OneChatPage({ params }: PageProps) {
       </div>
 
       <Messages
+        chatId={chatId}
         chatPartner={chatPartner}
         sessionImg={session.user.image}
         initialMessages={initialMessages}
