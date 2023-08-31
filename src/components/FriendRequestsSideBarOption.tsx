@@ -36,7 +36,7 @@ export default function FriendRequestsSideBarOption({
       );
       pusherClient.unbind("incoming_friend_request", friendRequestHandler);
     };
-  }, []);
+  }, [sessionId]);
 
   return (
     <Link
