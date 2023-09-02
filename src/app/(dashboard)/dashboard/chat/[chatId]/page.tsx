@@ -48,7 +48,14 @@ export default async function OneChatPage({ params }: PageProps) {
   if (user.id !== userId1 && user.id !== userId2) notFound();
 
   const chatPartnerId = user.id === userId1 ? userId2 : userId1;
-  const chatPartner = (await db.get(`user:${chatPartnerId}`)) as User;
+
+  const chatPartnerRaw = (await fetchRedis(
+    "get",
+    `user:${chatPartnerId}`
+  )) as string;
+
+  const chatPartner = JSON.parse(chatPartnerRaw) as User;
+
   const initialMessages = await getChatMessages(chatId);
 
   return (
