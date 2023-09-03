@@ -113,6 +113,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
                 <div className="relative h-8 w-8 bg-gray-50">
                   <Image
                     fill
+                    sizes="20"
                     referrerPolicy="no-referrer"
                     className="rounded-full"
                     src={session.user.image || ""}

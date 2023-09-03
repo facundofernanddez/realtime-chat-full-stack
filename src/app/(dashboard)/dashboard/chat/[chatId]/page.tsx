@@ -66,6 +66,7 @@ export default async function OneChatPage({ params }: PageProps) {
             <div className="relative w-8 sm:w-12 h-8 sm:h-12">
               <Image
                 fill
+                sizes="20"
                 referrerPolicy="no-referrer"
                 src={chatPartner.image}
                 alt={`${chatPartner.name} profile picture`}

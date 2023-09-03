@@ -61,6 +61,7 @@ export default async function DashboardPage() {
                     alt={`${friend.name} profile picture`}
                     src={friend.image}
                     fill
+                    sizes="20"
                   />
                 </div>
               </div>
