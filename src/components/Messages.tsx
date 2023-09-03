@@ -26,7 +26,7 @@ export default function Messages({
   const scrollDownRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    pusherClient.subscribe(toPusherKey(`user:${chatId}`));
+    pusherClient.subscribe(toPusherKey(`chat:${chatId}`));
 
     const messageHandler = (message: Message) => {
       setMessages((prev) => [message, ...prev]);
@@ -35,7 +35,7 @@ export default function Messages({
     pusherClient.bind("incoming-message", messageHandler);
 
     return () => {
-      pusherClient.unsubscribe(toPusherKey(`user:${chatId}`));
+      pusherClient.unsubscribe(toPusherKey(`chat:${chatId}`));
       pusherClient.unbind("incoming-message", messageHandler);
     };
   }, [chatId]);
@@ -100,6 +100,7 @@ export default function Messages({
               >
                 <Image
                   fill
+                  sizes="20"
                   src={
                     isCurrentUser ? (sessionImg as string) : chatPartner.image
                   }
