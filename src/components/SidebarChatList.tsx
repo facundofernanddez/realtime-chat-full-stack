@@ -26,7 +26,7 @@ export default function SidebarChatList({
   const [activeChats, setActiveChats] = useState<User[]>(friends);
 
   useEffect(() => {
-    pusherClient.subscribe(toPusherKey(`user:${sessionId}:chats`));
+    pusherClient.subscribe(toPusherKey(`chat:${sessionId}:chats`));
     pusherClient.subscribe(toPusherKey(`user:${sessionId}:friends`));
 
     const newFriendHandler = (newFriend: User) => {
@@ -58,7 +58,7 @@ export default function SidebarChatList({
     pusherClient.bind("new_friend", newFriendHandler);
 
     return () => {
-      pusherClient.unsubscribe(toPusherKey(`user:${sessionId}:chats`));
+      pusherClient.unsubscribe(toPusherKey(`chat:${sessionId}:chats`));
       pusherClient.unsubscribe(toPusherKey(`user:${sessionId}:friends`));
 
       pusherClient.unbind("new_message", chatHandler);
