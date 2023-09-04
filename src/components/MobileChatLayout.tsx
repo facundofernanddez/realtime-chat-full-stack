@@ -5,7 +5,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import Button, { buttonVariants } from "./ui/Button";
-import { Icons } from "./icons";
+import { Icons } from "./Icons";
 import SignOutButton from "./SignOutButton";
 import Image from "next/image";
 import FriendRequestsSideBarOption from "./FriendRequestsSideBarOption";
