@@ -2,7 +2,7 @@ import FriendRequestsSideBarOption from "@/components/FriendRequestsSideBarOptio
 import MobileLayout from "@/components/MobileChatLayout";
 import SidebarChatList from "@/components/SidebarChatList";
 import SignOutButton from "@/components/SignOutButton";
-import { Icons } from "@/components/Icons";
+import { Icons } from "@/components/icons";
 import { getFriendsByUserId } from "@/helpers/getFriend";
 import { fetchRedis } from "@/helpers/redis";
 import { authOptions } from "@/lib/auth";
