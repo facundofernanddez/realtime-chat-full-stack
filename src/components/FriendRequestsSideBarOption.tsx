@@ -30,7 +30,7 @@ export default function FriendRequestsSideBarOption({
     };
 
     const addedFriendHandler = () => {
-      setUnseenRequestCount((prev) => prev + 1);
+      setUnseenRequestCount((prev) => prev - 1);
     };
 
     pusherClient.bind("incoming_friend_request", friendRequestHandler);
